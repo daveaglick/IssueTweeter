@@ -57,7 +57,7 @@ namespace IssueTweeter
 
             // Aggregate and eliminate issues already tweeted
             List<string> tweets = issuesTasks
-                .SelectMany(x => x.Result.Where(i => !timeline.Any(t => t.Text.StartsWith(i.Key))).Select(i => i.Value))
+                .SelectMany(x => x.Result.Where(i => !timeline.Any(t => t.Text.Contains(i.Key))).Select(i => i.Value))
                 .ToList();
 
             // Send tweets
@@ -77,7 +77,7 @@ namespace IssueTweeter
             {
                 string key = $"{repo}#{issue.Number}";
                 int remainingChars = 140 - (key.Length + 25);
-                string value = $"{key} {issue.HtmlUrl}\r\n{(issue.Title.Length <= remainingChars ? issue.Title : issue.Title.Substring(0, remainingChars))}";
+                string value = $"{(issue.Title.Length <= remainingChars ? issue.Title : issue.Title.Substring(0, remainingChars))}\r\n{key} {issue.HtmlUrl}";
                 tweets.Add(new KeyValuePair<string, string>(key, value));
             }
             return tweets;
