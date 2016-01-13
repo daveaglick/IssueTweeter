@@ -24,6 +24,12 @@ namespace IssueTweeter
                 .Select(x => x.Trim())
                 .ToArray();
 
+            // Get excluded users
+            string[] excludedUsers = ConfigurationManager.AppSettings["ExcludedUsers"]
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.Trim())
+                .ToArray();
+
             // Authorize to GitHub
             string token = ConfigurationManager.AppSettings["GitHubToken"];
             GitHubClient github = new GitHubClient(new ProductHeaderValue("IssueTweeter"))
@@ -33,7 +39,7 @@ namespace IssueTweeter
 
             // Get issues for each repo
             DateTimeOffset since = DateTimeOffset.UtcNow.AddHours(-1);
-            List<Task<List<KeyValuePair<string, string>>>> issuesTasks = repos.Select(x => GetIssues(github, x, since)).ToList();
+            List<Task<List<KeyValuePair<string, string>>>> issuesTasks = repos.Select(x => GetIssues(github, x, since, excludedUsers)).ToList();
             await Task.WhenAll(issuesTasks);
 
             // Authorize to Twitter
@@ -66,13 +72,13 @@ namespace IssueTweeter
         }
 
         // Kvp = owner/repo#issue, full text of tweet
-        static async Task<List<KeyValuePair<string, string>>> GetIssues(GitHubClient github, string repo, DateTimeOffset since)
+        static async Task<List<KeyValuePair<string, string>>> GetIssues(GitHubClient github, string repo, DateTimeOffset since, string[] excludedUsers)
         {
             List<KeyValuePair<string, string>> tweets = new List<KeyValuePair<string, string>>();
             string[] ownerName = repo.Split('\\');
             IReadOnlyList<Issue> issues = await github.Issue
                 .GetAllForRepository(ownerName[0], ownerName[1], new RepositoryIssueRequest { Since = since, State = ItemState.All});
-            issues = issues.Where(x => x.CreatedAt > since).ToList();
+            issues = issues.Where(x => x.CreatedAt > since && !excludedUsers.Contains(x.User.Login)).ToList();
             foreach (Issue issue in issues)
             {
                 string key = $"{repo}#{issue.Number}";
