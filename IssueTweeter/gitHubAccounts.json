@@ -6,7 +6,8 @@
       "coreclr",
       "corefx",
       "corefxlab",
-      "cli"
+      "cli",
+      "csharplang"
     ]
   },
   {
