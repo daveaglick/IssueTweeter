@@ -4,10 +4,15 @@
     "Repositories": [
       "roslyn",
       "coreclr",
+      "corert",
+      "core",
       "corefx",
       "corefxlab",
       "cli",
-      "csharplang"
+      "csharplang",
+      "buildtools",
+      "standard",
+      "roslyn-project-system"
     ]
   },
   {
@@ -24,13 +29,19 @@
       "DependencyInjection",
       "Logging",
       "Configuration",
-      "Announcements"
+      "Announcements",
+      "HttpAbstractions",
+      "KestrelHttpServer",
+      "Entropy",
+      "Caching",
+      "Routing"
     ]
   },
   {
     "Owner": "NuGet",
     "Repositories": [
-      "Home"
+      "Home",
+      "NuGet.Client"
     ]
   }
 ]

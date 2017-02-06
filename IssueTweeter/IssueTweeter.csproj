@@ -109,10 +109,10 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Properties\PublishProfiles\DotNetIssues.pubxml" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\DotNetIssues - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
     <Content Include="gitHubAccounts.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
