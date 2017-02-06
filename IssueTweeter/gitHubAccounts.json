@@ -1,0 +1,36 @@
+[
+  {
+    "Owner": "dotnet",
+    "Repositories": [
+      "roslyn",
+      "coreclr",
+      "corefx",
+      "corefxlab",
+      "cli",
+      "csharplang"
+    ]
+  },
+  {
+    "Owner": "aspnet",
+    "Repositories": [
+      "dnx",
+      "Hosting",
+      "Routing",
+      "Identity",
+      "Razor",
+      "Security",
+      "Mvc",
+      "EntityFramework",
+      "DependencyInjection",
+      "Logging",
+      "Configuration",
+      "Announcements"
+    ]
+  },
+  {
+    "Owner": "NuGet",
+    "Repositories": [
+      "Home"
+    ]
+  }
+]
