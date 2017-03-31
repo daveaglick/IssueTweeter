@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using LinqToTwitter;
 using IssueTweeter.Models;
 using IssueTweeter.Domain;
+using Configuration = IssueTweeter.Domain.Configuration;
 
 namespace IssueTweeter
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -43,19 +44,22 @@ namespace IssueTweeter
         static async Task AsyncMain()
         {
             // Get accounts
-            GitHubAccount[] accounts = Configuration.GitHubAccounts;
+            Configuration configuration = new Configuration();
+            GitHubAccount[] accounts = configuration.GitHubAccounts;
 
             // Get excluded users
-            string[] excludedUsers = Configuration.ExcludedUsers;
+            string[] excludedUsers = configuration.ExcludedUsers;
 
             // Get issues for each account repository
-            DateTimeOffset since = DateTimeOffset.UtcNow.AddHours(-1);
+            DateTimeOffset since = DateTimeOffset.UtcNow.AddMinutes(-30);
+            GitHub gitHub = new GitHub(configuration);
             List<KeyValuePair<string, string>> issues =
-                await GitHub.GetIssuesForAccounts(accounts, since, excludedUsers)
+                await gitHub.GetIssuesForAccounts(accounts, since, excludedUsers)
                 .ConfigureAwait(false);
 
             // Get recent tweets
-            List<Status> recentTweets = await Twitter.GetRecentTweets(200); 
+            Twitter twitter = new Twitter(configuration);
+            List<Status> recentTweets = await twitter.GetRecentTweets(200); 
 
             // Aggregate and eliminate issues already tweeted
             List<string> tweets = issues
@@ -64,7 +68,7 @@ namespace IssueTweeter
                 .ToList();
 
             // Send tweets
-            await Twitter.SendTweets(tweets).ConfigureAwait(false);
+            await twitter.SendTweets(tweets).ConfigureAwait(false);
         }
     }
 }

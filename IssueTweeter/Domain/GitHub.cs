@@ -7,21 +7,25 @@ using System.Threading.Tasks;
 
 namespace IssueTweeter.Domain
 {
-    class GitHub
+    public class GitHub
     {
-        // Authorize to GitHub
-        static GitHubClient gitHubClient = new GitHubClient(new ProductHeaderValue("IssueTweeter"))
-        {
-            Credentials = new Credentials(Configuration.GitHubToken)
-        };
+        private readonly GitHubClient _client;
 
-        internal static async Task<List<KeyValuePair<string, string>>> GetIssuesForAccounts(GitHubAccount[] accounts, DateTimeOffset since, string[] excludedUsers)
+        public GitHub(Configuration configuration)
+        {
+            _client = new GitHubClient(new ProductHeaderValue("IssueTweeter"))
+            {
+                Credentials = new Credentials(configuration.GitHubToken)
+            };
+        }
+
+        public async Task<List<KeyValuePair<string, string>>> GetIssuesForAccounts(GitHubAccount[] accounts, DateTimeOffset since, string[] excludedUsers)
         {
             // get repositories
-            var repos = new List<string>();
-            foreach (var account in accounts)
+            List<string> repos = new List<string>();
+            foreach (GitHubAccount account in accounts)
             {
-                foreach (var repository in account.Repositories)
+                foreach (string repository in account.Repositories)
                 {
                     repos.Add($"{account.Owner}\\{repository}");
                 }
@@ -38,12 +42,12 @@ namespace IssueTweeter.Domain
         }
 
         // Kvp = owner/repo#issue, full text of tweet
-        internal static async Task<List<KeyValuePair<string, string>>> GetIssuesForRepository(string repo, DateTimeOffset since, string[] excludedUsers)
+        public async Task<List<KeyValuePair<string, string>>> GetIssuesForRepository(string repo, DateTimeOffset since, string[] excludedUsers)
         {
             List<KeyValuePair<string, string>> tweets = new List<KeyValuePair<string, string>>();
             string[] ownerName = repo.Split('\\');
-            IReadOnlyList<Issue> issues = await gitHubClient.Issue
-                .GetAllForRepository(ownerName[0], ownerName[1], new RepositoryIssueRequest { Since = since, State = ItemState.All });
+            IReadOnlyList<Issue> issues = await _client.Issue
+                .GetAllForRepository(ownerName[0], ownerName[1], new RepositoryIssueRequest { Since = since, State = ItemStateFilter.All });
             issues = issues.Where(x => x.CreatedAt > since && !excludedUsers.Contains(x.User.Login)).ToList();
             foreach (Issue issue in issues)
             {

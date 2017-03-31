@@ -2,6 +2,7 @@
   {
     "Owner": "dotnet",
     "Repositories": [
+      "announcements",
       "roslyn",
       "coreclr",
       "corert",
@@ -12,13 +13,12 @@
       "csharplang",
       "buildtools",
       "standard",
-      "roslyn-project-system"
+      "project-system"
     ]
   },
   {
     "Owner": "aspnet",
     "Repositories": [
-      "dnx",
       "Hosting",
       "Routing",
       "Identity",

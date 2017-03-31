@@ -49,17 +49,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LinqToTwitter.AspNet, Version=3.1.2.18330, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LinqToTwitter.3.1.2\lib\net45\LinqToTwitter.AspNet.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="LinqToTwitter.AspNet, Version=3.2.0.30483, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\linqtotwitter.4.1.0\lib\net45\LinqToTwitter.AspNet.dll</HintPath>
     </Reference>
-    <Reference Include="LinqToTwitterPcl, Version=3.1.2.18329, Culture=neutral, PublicKeyToken=957107be965c25d9, processorArchitecture=MSIL">
-      <HintPath>..\packages\LinqToTwitter.3.1.2\lib\net45\LinqToTwitterPcl.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="LinqToTwitter.net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=957107be965c25d9, processorArchitecture=MSIL">
+      <HintPath>..\packages\linqtotwitter.4.1.0\lib\net45\LinqToTwitter.net.dll</HintPath>
     </Reference>
-    <Reference Include="Octokit, Version=0.16.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Octokit.0.16.0\lib\net45\Octokit.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Octokit, Version=0.24.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Octokit.0.24.0\lib\net45\Octokit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -120,6 +117,7 @@
     <Content Include="secrets.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="settings.job" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6">
@@ -142,6 +140,7 @@
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
   <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.12\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.12\tools\webjobs.targets')" />
+  <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.1.0.13\tools\webjobs.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.1.0.13\tools\webjobs.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

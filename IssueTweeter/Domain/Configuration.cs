@@ -1,27 +1,32 @@
-﻿using IssueTweeter.Models;
-using LitJson;
-using System;
+﻿using System;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using IssueTweeter.Models;
+using LitJson;
 
-namespace IssueTweeter
+namespace IssueTweeter.Domain
 {
-    class Configuration
+    public class Configuration
     {
         // GitHub
-        internal static GitHubAccount[] GitHubAccounts = JsonMapper.ToObject<GitHubAccount[]>(File.ReadAllText(@"gitHubAccounts.json"));
-        internal static string GitHubToken = ConfigurationManager.AppSettings["GitHubToken"];
-        internal static string[] ExcludedUsers = ConfigurationManager.AppSettings["ExcludedUsers"]
+        public GitHubAccount[] GitHubAccounts { get; }
+        public string GitHubToken => ConfigurationManager.AppSettings["GitHubToken"];
+        public string[] ExcludedUsers => ConfigurationManager.AppSettings["ExcludedUsers"]
             .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
             .Select(x => x.Trim())
             .ToArray();
 
         // Twitter
-        internal static string TwitterUser = ConfigurationManager.AppSettings["TwitterUser"];
-        internal static string TwitterConsumerKey = ConfigurationManager.AppSettings["TwitterConsumerKey"];
-        internal static string TwitterConsumerSecret = ConfigurationManager.AppSettings["TwitterConsumerSecret"];
-        internal static string TwitterAccessToken = ConfigurationManager.AppSettings["TwitterAccessToken"];
-        internal static string TwitterAccessTokenSecret = ConfigurationManager.AppSettings["TwitterAccessTokenSecret"];
+        public string TwitterUser => ConfigurationManager.AppSettings["TwitterUser"];
+        public string TwitterConsumerKey => ConfigurationManager.AppSettings["TwitterConsumerKey"];
+        public string TwitterConsumerSecret => ConfigurationManager.AppSettings["TwitterConsumerSecret"];
+        public string TwitterAccessToken => ConfigurationManager.AppSettings["TwitterAccessToken"];
+        public string TwitterAccessTokenSecret => ConfigurationManager.AppSettings["TwitterAccessTokenSecret"];
+
+        public Configuration()
+        {
+            GitHubAccounts = JsonMapper.ToObject<GitHubAccount[]>(File.ReadAllText(@"gitHubAccounts.json"));
+        }
     }
 }

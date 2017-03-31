@@ -5,37 +5,42 @@ using System.Threading.Tasks;
 
 namespace IssueTweeter.Domain
 {
-    class Twitter
+    public class Twitter
     {
-        // Authorize to Twitter
-        static readonly SingleUserAuthorizer TwitterAuth = new SingleUserAuthorizer
+        private readonly TwitterContext _context;
+        private readonly string _twitterUser;
+
+        public Twitter(Configuration configuration)
         {
-            CredentialStore = new SingleUserInMemoryCredentialStore
+            _twitterUser = configuration.TwitterUser;
+            SingleUserAuthorizer auth = new SingleUserAuthorizer
             {
-                ConsumerKey = Configuration.TwitterConsumerKey,
-                ConsumerSecret = Configuration.TwitterConsumerSecret,
-                AccessToken = Configuration.TwitterAccessToken,
-                AccessTokenSecret = Configuration.TwitterAccessTokenSecret
-            }
-        };
+                CredentialStore = new SingleUserInMemoryCredentialStore
+                {
+                    ConsumerKey = configuration.TwitterConsumerKey,
+                    ConsumerSecret = configuration.TwitterConsumerSecret,
+                    AccessToken = configuration.TwitterAccessToken,
+                    AccessTokenSecret = configuration.TwitterAccessTokenSecret
+                }
+            };
+            _context = new TwitterContext(auth);
+        }
 
-        static readonly TwitterContext Context = new TwitterContext(TwitterAuth);
-
-        internal static async Task<List<Status>> GetRecentTweets(int count)
+        public async Task<List<Status>> GetRecentTweets(int count)
         {
-            return await Context.Status
+            return await _context.Status
                 .Where(
                     x => x.Type == StatusType.User
-                    && x.ScreenName == Configuration.TwitterUser
+                    && x.ScreenName == _twitterUser
                     && x.Count == count)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
 
-        internal static async Task<List<Status>> SendTweets(IEnumerable<string> tweets)
+        public async Task<List<Status>> SendTweets(IEnumerable<string> tweets)
         {
             List<Task<Status>> tweetTasks = tweets
-                .Select(x => Context.TweetAsync(x))
+                .Select(x => _context.TweetAsync(x))
                 .ToList();
             await Task.WhenAll(tweetTasks).ConfigureAwait(false);
             return tweetTasks.Select(x => x.Result).ToList();
