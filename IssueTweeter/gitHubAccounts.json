@@ -41,7 +41,8 @@
     "Owner": "NuGet",
     "Repositories": [
       "Home",
-      "NuGet.Client"
+      "NuGet.Client",
+      "Announcements"
     ]
   }
 ]
