@@ -13,7 +13,12 @@
       "csharplang",
       "buildtools",
       "standard",
-      "project-system"
+      "project-system",
+      "versions",
+      "sdk",
+      "vblang",
+      "designs",
+      "apireviews"
     ]
   },
   {
@@ -26,6 +31,7 @@
       "Security",
       "Mvc",
       "EntityFramework",
+      "EntityFrameworkCore",
       "DependencyInjection",
       "Logging",
       "Configuration",
@@ -34,7 +40,15 @@
       "KestrelHttpServer",
       "Entropy",
       "Caching",
-      "Routing"
+      "Routing",
+      "Blazor",
+      "SignalR",
+      "DotNetTools",
+      "Common",
+      "WebSockets",
+      "WebHooks",
+      "StaticFiles",
+      "Session"
     ]
   },
   {
