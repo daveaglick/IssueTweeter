@@ -30,7 +30,6 @@
       "Razor",
       "Security",
       "Mvc",
-      "EntityFramework",
       "EntityFrameworkCore",
       "DependencyInjection",
       "Logging",
@@ -56,7 +55,8 @@
     "Repositories": [
       "Home",
       "NuGet.Client",
-      "Announcements"
+      "Announcements",
+      "NuGetGallery"
     ]
   }
 ]
