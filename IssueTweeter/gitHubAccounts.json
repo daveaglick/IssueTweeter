@@ -24,30 +24,11 @@
   {
     "Owner": "aspnet",
     "Repositories": [
-      "Hosting",
-      "Routing",
-      "Identity",
-      "Razor",
-      "Security",
-      "Mvc",
-      "EntityFrameworkCore",
-      "DependencyInjection",
-      "Logging",
-      "Configuration",
       "Announcements",
-      "HttpAbstractions",
-      "KestrelHttpServer",
-      "Entropy",
-      "Caching",
-      "Routing",
-      "Blazor",
-      "SignalR",
-      "DotNetTools",
-      "Common",
-      "WebSockets",
-      "WebHooks",
-      "StaticFiles",
-      "Session"
+      "AspNetCore",
+      "Benchmarks",
+      "EntityFrameworkCore",
+      "Extensions"
     ]
   },
   {
