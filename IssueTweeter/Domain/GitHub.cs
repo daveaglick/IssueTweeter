@@ -48,7 +48,7 @@ namespace IssueTweeter.Domain
             string[] ownerName = repo.Split('\\');
             IReadOnlyList<Issue> issues = await _client.Issue
                 .GetAllForRepository(ownerName[0], ownerName[1], new RepositoryIssueRequest { Since = since, State = ItemStateFilter.All });
-            issues = issues.Where(x => x.CreatedAt > since && !excludedUsers.Contains(x.User.Login)).ToList();
+            issues = issues.Where(x => x.CreatedAt > since && x.User.Type != AccountType.Bot && !excludedUsers.Contains(x.User.Login)).ToList();
             foreach (Issue issue in issues)
             {
                 string key = $"{repo}#{issue.Number}";
