@@ -51,9 +51,14 @@ namespace IssueTweeter.Domain
             issues = issues.Where(x => x.CreatedAt > since && x.User.Type != AccountType.Bot && !excludedUsers.Contains(x.User.Login)).ToList();
             foreach (Issue issue in issues)
             {
-                string key = $"{repo}#{issue.Number}";
-                int remainingChars = 140 - (key.Length + 25);
-                string value = $"{(issue.Title.Length <= remainingChars ? issue.Title : issue.Title.Substring(0, remainingChars))}\r\n{key} {issue.HtmlUrl}";
+                string key = $"[{repo}, #{issue.Number}, {issue.User.Login}]";
+                int remainingChars = 280 - (key.Length + 25);  // +25 for issue URL, \r\n, space after key
+                string text = issue.Title;
+                if (issue.PullRequest != null)
+                {
+                    text = "PR: " + text;
+                }
+                string value = $"{(text.Length <= remainingChars ? text : (text.Substring(0, remainingChars - 3) + "..."))}\r\n{key} {issue.HtmlUrl}";
                 tweets.Add(new KeyValuePair<string, string>(key, value));
             }
             return tweets;
