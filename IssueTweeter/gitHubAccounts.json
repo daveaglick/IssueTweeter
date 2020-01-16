@@ -2,33 +2,39 @@
   {
     "Owner": "dotnet",
     "Repositories": [
+      "runtime",
+      "sdk",
+      "aspnetcore",
+      "efcore",
       "announcements",
       "roslyn",
       "coreclr",
       "corert",
       "core",
-      "corefx",
       "corefxlab",
-      "cli",
       "csharplang",
+      "vblang",
+      "fsharp",
       "buildtools",
       "standard",
       "project-system",
+      "project-system-tools",
       "versions",
-      "sdk",
-      "vblang",
       "designs",
-      "apireviews"
+      "apireviews",
+      "extensions",
+      "templating",
+      "performance"
     ]
   },
   {
     "Owner": "aspnet",
     "Repositories": [
       "Announcements",
-      "AspNetCore",
       "Benchmarks",
-      "EntityFrameworkCore",
-      "Extensions"
+      "websdk",
+      "Scaffolding",
+      "AspLabs"
     ]
   },
   {
@@ -36,8 +42,10 @@
     "Repositories": [
       "Home",
       "NuGet.Client",
+      "NuGet.Server",
       "Announcements",
-      "NuGetGallery"
+      "NuGetGallery",
+      "Entropy"
     ]
   }
 ]
